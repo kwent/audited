@@ -56,7 +56,7 @@ end
 if defined?(ActionController) and defined?(ActionController::Base)
   # Create dynamic subclass of Audited::Sweeper otherwise rspec will
   # fail with both ActiveRecord and MongoMapper tests as there will be
-  # around_filter collision
+  # around_action collision
   sweeper_class = Class.new(Audited::Sweeper) do
     def self.name
       "#{Audited.audit_class}::Sweeper"
@@ -64,6 +64,6 @@ if defined?(ActionController) and defined?(ActionController::Base)
   end
 
   ActionController::Base.class_eval do
-    around_filter sweeper_class.instance
+    around_action sweeper_class.instance
   end
 end
